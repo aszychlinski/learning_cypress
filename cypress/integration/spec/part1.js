@@ -3,7 +3,7 @@ describe('Part 1', () => {
     it('4a', () => {
         // Uzupełniamy wszystkie dane, i resetujemy - weryfikujemy czy wyczyściło poprawnie
 
-        cy.visit('/Contact-Us/contactus.html')
+        cy.visit('https://webdriveruniversity.com/Contact-Us/contactus.html')
 
         cy.get('[placeholder="First Name"]').type('Adam')
         cy.get('[placeholder="Last Name"]').type('Szychliński')
@@ -22,7 +22,7 @@ describe('Part 1', () => {
     it('4b', () => {
         // Wprowadzamy cześć danych i próbujemy wysłać - sprawdzamy komunikat błędu
 
-        cy.visit('/Contact-Us/contactus.html')
+        cy.visit('https://webdriveruniversity.com/Contact-Us/contactus.html')
 
         cy.get('[placeholder="Email Address"]').type('adam.szychlinski@itmagination.com')
 
@@ -34,7 +34,7 @@ describe('Part 1', () => {
     it('4c', () => {
         // Wprowadzamy błędny email i sprawdzamy komunikat
 
-        cy.visit('/Contact-Us/contactus.html')
+        cy.visit('https://webdriveruniversity.com/Contact-Us/contactus.html')
 
         cy.get('[placeholder="First Name"]').type('Adam')
         cy.get('[placeholder="Last Name"]').type('Szychliński')
@@ -46,10 +46,10 @@ describe('Part 1', () => {
 
     })
 
-    it.only('4d', () => {
+    it('4d', () => {
         // Wprowadzamy wszystkie dane i sprawdzamy komunikat
 
-        cy.visit('/Contact-Us/contactus.html')
+        cy.visit('https://webdriveruniversity.com/Contact-Us/contactus.html')
 
         cy.get('[placeholder="First Name"]').type('Adam')
         cy.get('[placeholder="Last Name"]').type('Szychliński')
