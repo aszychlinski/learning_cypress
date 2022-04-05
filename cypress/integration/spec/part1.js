@@ -19,4 +19,14 @@ describe('Part 1', () => {
 
     })
 
+    it('4b', () => {
+        // Wprowadzamy cześć danych i próbujemy wysłać - sprawdzamy komunikat błędu
+
+        cy.visit('/Contact-Us/contactus.html')
+        cy.get('[placeholder="Email Address"]').type('adam.szychlinski@itmagination.com')
+        cy.get('[type="submit"][value="SUBMIT"]').click()
+        cy.get('body').contains('Error: all fields are requiredd')
+
+    })
+
 })
