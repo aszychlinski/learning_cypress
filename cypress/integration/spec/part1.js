@@ -46,4 +46,20 @@ describe('Part 1', () => {
 
     })
 
+    it.only('4d', () => {
+        // Wprowadzamy wszystkie dane i sprawdzamy komunikat
+
+        cy.visit('/Contact-Us/contactus.html')
+
+        cy.get('[placeholder="First Name"]').type('Adam')
+        cy.get('[placeholder="Last Name"]').type('Szychliński')
+        cy.get('[placeholder="Email Address"]').type('adam.szychlinski@itmagination.com')
+        cy.get('[placeholder="Comments"]').type('lubię placki')
+
+        cy.get('[type="submit"][value="SUBMIT"]').click()
+
+        cy.contains('#contact_reply', 'Thank You for your Message!')
+
+    })
+
 })
