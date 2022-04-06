@@ -62,4 +62,19 @@ describe('Part 1', () => {
 
     })
 
+    it('4f', () => {
+        // Wybieramy wszystkie możliwe opcje z dropdownow i sprawdzamy ich wartości czy są poprawne
+
+        cy.visit('https://webdriveruniversity.com/Dropdown-Checkboxes-RadioButtons/index.html')
+
+        for (let i = 1; i < 4; i++) {
+            cy.get(`#dropdowm-menu-${i} option`).each( dropDownItem => {
+                cy.wrap(dropDownItem).invoke('attr', 'value').should('equal', dropDownItem.text().toLowerCase())
+            })
+            for (let j = 0; j < 4; j++) {
+                cy.get(`#dropdowm-menu-${i}`).select(j)
+            }
+        }
+    })
+
 })
