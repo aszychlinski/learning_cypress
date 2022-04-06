@@ -75,6 +75,23 @@ describe('Part 1', () => {
                 cy.get(`#dropdowm-menu-${i}`).select(j)
             }
         }
+
+    })
+
+    it('4g', () => {
+        // Zaznaczamy wszystkie checkboxy a następnie odznaczamy 2 i 4 - sprawdzamy czy  zostały odznaczone i zaznaczone poprawnie
+
+        cy.visit('https://webdriveruniversity.com/Dropdown-Checkboxes-RadioButtons/index.html')
+
+        cy.get('#checkboxes').find('input').check()
+        cy.get('#checkboxes').find('input').eq(1).click()
+        cy.get('#checkboxes').find('input').eq(3).click()
+
+        cy.get('#checkboxes').find('input').eq(0).invoke('prop', 'checked').should('equal', true)
+        cy.get('#checkboxes').find('input').eq(1).invoke('prop', 'checked').should('equal', false)
+        cy.get('#checkboxes').find('input').eq(2).invoke('prop', 'checked').should('equal', true)
+        cy.get('#checkboxes').find('input').eq(3).invoke('prop', 'checked').should('equal', false)
+
     })
 
 })
