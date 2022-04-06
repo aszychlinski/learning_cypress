@@ -94,4 +94,15 @@ describe('Part 1', () => {
 
     })
 
+    it('4h', () => {
+        // Klikamy wszystkie Radio buttony po każdym kliknięciu sprawdzamy czy zaznaczył się ten który chcieliśmy
+
+        cy.visit('https://webdriveruniversity.com/Dropdown-Checkboxes-RadioButtons/index.html')
+
+        for (let i = 0; i < 5; i++) {
+            cy.get('#radio-buttons').find('input').eq(i).check()
+            cy.get('#radio-buttons').find('input').eq(i).invoke('prop', 'checked').should('equal', true)
+        }
+
+    })
 })
