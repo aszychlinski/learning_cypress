@@ -1,5 +1,25 @@
 describe('Part 1', () => {
 
+    it('6', () => {
+        // "Automatyzujemy stronę Datepicker - wpisujemy date i sprawdzamy czy została wybrana poprawna"
+        // w tym datepickerze nie da rady pisać z palca... musiałem wymyślić coś innego do zrobienia
+
+        cy.visit('https://webdriveruniversity.com/Datepicker/index.html')
+
+        let date = new Date()
+        const today = date.getDate()
+        const tomorrow = today + 1
+        cy.log(date.toString())
+        cy.log(tomorrow)
+
+        cy.get('#datepicker input').click()
+        cy.get('[class="today day"]').should('have.text', today.toString())
+        cy.get('[class="today day"]').siblings().contains('td', tomorrow.toString()).click()
+        cy.get('#datepicker input').click()
+        cy.get('[class="active day"]').should('have.text', tomorrow.toString())
+    })
+
+
     it('7', () => {
         // Automatyzujemy stronę Autocomplete TextField - wpisujemy 3 pierwsze znaki i wybieramy 2 element z listy podpowiadanej np. ('chi')
 
