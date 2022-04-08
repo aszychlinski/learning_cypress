@@ -1,3 +1,19 @@
+class AjaxLoader {
+    static greenButton = '#myDiv[style="display: block;"] p';
+    static closeModalButton = '[data-dismiss="modal"]'
+}
+
+class AutoComplete {
+    static input = '#myInput';
+    static choiceList = '#myInputautocomplete-list div';
+}
+
+class Datepicker {
+    static todayDay = '[class="today day"]';
+    static activeDay = '[class="active day"]';
+    static input = '#datepicker input';
+}
+
 describe('Part 1', () => {
 
     it('6', () => {
@@ -9,14 +25,12 @@ describe('Part 1', () => {
         const date = new Date()
         const today = date.getDate()
         const tomorrow = today + 1
-        cy.log(date.toString())
-        cy.log(tomorrow)
 
-        cy.get('#datepicker input').click()
-        cy.get('[class="today day"]').should('have.text', today.toString())
-        cy.get('[class="today day"]').siblings().contains('td', tomorrow.toString()).click()
-        cy.get('#datepicker input').click()
-        cy.get('[class="active day"]').should('have.text', tomorrow.toString())
+        cy.get(Datepicker.input).click()
+        cy.get(Datepicker.todayDay).should('have.text', today.toString())
+        cy.get(Datepicker.todayDay).siblings().contains('td', tomorrow.toString()).click()
+        cy.get(Datepicker.input).click()
+        cy.get(Datepicker.activeDay).should('have.text', tomorrow.toString())
     })
 
 
@@ -25,8 +39,8 @@ describe('Part 1', () => {
 
         cy.visit('https://webdriveruniversity.com/Autocomplete-TextField/autocomplete-textfield.html')
 
-        cy.get('#myInput').type('Chi')
-        cy.get('#myInputautocomplete-list div').eq(1).click()
+        cy.get(AutoComplete.input).type('Chi')
+        cy.get(AutoComplete.choiceList).eq(1).click()
     })
 
     before(() => {
@@ -45,8 +59,8 @@ describe('Part 1', () => {
 
         cy.visit('https://webdriveruniversity.com/Ajax-Loader/index.html')
 
-        cy.get('#myDiv[style="display: block;"] p').click()
-        cy.contains('[data-dismiss="modal"]', 'Close').click()
+        cy.get(AjaxLoader.greenButton).click({timeout: 20000})
+        cy.contains(AjaxLoader.closeModalButton, 'Close').click()
     })
 
     after(() =>{
