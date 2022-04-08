@@ -12,6 +12,11 @@ class ContactUs {
 class DropCheckRadio {
     static checkBoxes = '#checkboxes';
     static radioButtons = '#radio-buttons';
+    static allDropDownMenus = '[id^=dropdowm-menu-]';
+
+    static paramDropDownMenu (value) {
+        return `[id^=dropdowm-menu-${value}]`
+    }
 }
 
 describe('Part 1', () => {
@@ -83,14 +88,13 @@ describe('Part 1', () => {
 
         cy.visit('https://webdriveruniversity.com/Dropdown-Checkboxes-RadioButtons/index.html')
 
-        for (let i = 1; i < 4; i++) {
-            cy.get(`#dropdowm-menu-${i} option`).each( dropDownItem => {
-                cy.wrap(dropDownItem).invoke('attr', 'value').should('equal', dropDownItem.text().toLowerCase())
+        cy.get(DropCheckRadio.allDropDownMenus).each( (dropdown, dropDownIndex) => {
+            dropDownIndex += 1
+            cy.get(DropCheckRadio.paramDropDownMenu(dropDownIndex)).find('option').each( (option, optionIndex) => {
+                cy.get(DropCheckRadio.paramDropDownMenu(dropDownIndex)).select(optionIndex)
+                cy.wrap(option).invoke('attr', 'value').should('equal', option.text().toLowerCase())
             })
-            for (let j = 0; j < 4; j++) {
-                cy.get(`#dropdowm-menu-${i}`).select(j)
-            }
-        }
+        })
 
     })
 
