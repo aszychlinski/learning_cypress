@@ -6,7 +6,7 @@ describe('Part 1', () => {
 
         cy.visit('https://webdriveruniversity.com/Datepicker/index.html')
 
-        let date = new Date()
+        const date = new Date()
         const today = date.getDate()
         const tomorrow = today + 1
         cy.log(date.toString())
