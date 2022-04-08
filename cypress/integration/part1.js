@@ -1,6 +1,6 @@
 class AjaxLoader {
     static greenButton = '#myDiv[style="display: block;"] p';
-    static closeModalButton = '[data-dismiss="modal"]'
+    static closeModalButton = '[data-dismiss="modal"]';
 }
 
 class AutoComplete {
