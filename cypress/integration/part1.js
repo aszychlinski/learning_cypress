@@ -44,9 +44,6 @@ describe('Part 1', () => {
     })
 
     before(() => {
-        // the button appears after 5 seconds but set 20 to be safe
-        Cypress.config('defaultCommandTimeout', 20000)
-
         // the website is throwing an uncaught exception when visited by cypress, but it does not appear to
         // interfere with application functionality
         Cypress.on('uncaught:exception', (err, runnable) => {
@@ -59,12 +56,11 @@ describe('Part 1', () => {
 
         cy.visit('https://webdriveruniversity.com/Ajax-Loader/index.html')
 
-        cy.get(AjaxLoader.greenButton).click({timeout: 20000})
+        cy.get(AjaxLoader.greenButton, {timeout: 20000}).click()
         cy.contains(AjaxLoader.closeModalButton, 'Close').click()
     })
 
     after(() =>{
-        Cypress.config('defaultCommandTimeout', 4000)
         Cypress.on('uncaught:exception', (err, runnable) => {
             return true
         })
