@@ -99,10 +99,10 @@ describe('Part 1', () => {
 
         cy.visit('https://webdriveruniversity.com/Dropdown-Checkboxes-RadioButtons/index.html')
 
-        for (let i = 0; i < 5; i++) {
-            cy.get('#radio-buttons').find('input').eq(i).check()
-            cy.get('#radio-buttons').find('input').eq(i).invoke('prop', 'checked').should('equal', true)
-        }
+        cy.get('#radio-buttons').find('input').each((radioButton) => {
+            cy.wrap(radioButton).check()
+            cy.wrap(radioButton).check().invoke('prop', 'checked').should('equal', true)
+        })
 
     })
 })
