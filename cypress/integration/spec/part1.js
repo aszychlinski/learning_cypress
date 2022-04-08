@@ -1,3 +1,19 @@
+class ContactUs {
+    static body = 'body';
+    static contactReply = '#contact_reply';
+    static resetButton = '[type="reset"][value="RESET"]';
+    static submitButton = '[type="submit"][value="SUBMIT"]';
+
+    static placeholder (value) {
+        return `[placeholder="${value}"]`
+    }
+}
+
+class DropCheckRadio {
+    static checkBoxes = '#checkboxes';
+    static radioButtons = '#radio-buttons';
+}
+
 describe('Part 1', () => {
 
     it('4a', () => {
@@ -5,17 +21,17 @@ describe('Part 1', () => {
 
         cy.visit('https://webdriveruniversity.com/Contact-Us/contactus.html')
 
-        cy.get('[placeholder="First Name"]').type('Adam')
-        cy.get('[placeholder="Last Name"]').type('Szychliński')
-        cy.get('[placeholder="Email Address"]').type('adam.szychlinski@itmagination.com')
-        cy.get('[placeholder="Comments"]').type('lubię placki')
+        cy.get(ContactUs.placeholder('First Name')).type('Adam')
+        cy.get(ContactUs.placeholder('Last Name')).type('Szychliński')
+        cy.get(ContactUs.placeholder('Email Address')).type('adam.szychlinski@itmagination.com')
+        cy.get(ContactUs.placeholder('Comments')).type('lubię placki')
 
-        cy.get('[type="reset"][value="RESET"]').click()
+        cy.get(ContactUs.resetButton).click()
 
-        cy.get('[placeholder="First Name"]').should('have.value', '')
-        cy.get('[placeholder="Last Name"]').should('have.value', '')
-        cy.get('[placeholder="Email Address"]').should('have.value', '')
-        cy.get('[placeholder="Comments"]').should('have.value', '')
+        cy.get(ContactUs.placeholder('First Name')).should('have.value', '')
+        cy.get(ContactUs.placeholder('Last Name')).should('have.value', '')
+        cy.get(ContactUs.placeholder('Email Address')).should('have.value', '')
+        cy.get(ContactUs.placeholder('Comments')).should('have.value', '')
 
     })
 
@@ -24,9 +40,9 @@ describe('Part 1', () => {
 
         cy.visit('https://webdriveruniversity.com/Contact-Us/contactus.html')
 
-        cy.get('[placeholder="Email Address"]').type('adam.szychlinski@itmagination.com')
+        cy.get(ContactUs.placeholder('Email Address')).type('adam.szychlinski@itmagination.com')
 
-        cy.get('[type="submit"][value="SUBMIT"]').click()
+        cy.get(ContactUs.submitButton).click()
         cy.get('body').contains('Error: all fields are required')
 
     })
@@ -36,13 +52,13 @@ describe('Part 1', () => {
 
         cy.visit('https://webdriveruniversity.com/Contact-Us/contactus.html')
 
-        cy.get('[placeholder="First Name"]').type('Adam')
-        cy.get('[placeholder="Last Name"]').type('Szychliński')
-        cy.get('[placeholder="Email Address"]').type('adam.szychlinski')
-        cy.get('[placeholder="Comments"]').type('lubię placki')
+        cy.get(ContactUs.placeholder('First Name')).type('Adam')
+        cy.get(ContactUs.placeholder('Last Name')).type('Szychliński')
+        cy.get(ContactUs.placeholder('Email Address')).type('adam.szychlinski')
+        cy.get(ContactUs.placeholder('Comments')).type('lubię placki')
 
-        cy.get('[type="submit"][value="SUBMIT"]').click()
-        cy.get('body').contains('Error: Invalid email address')
+        cy.get(ContactUs.submitButton).click()
+        cy.get(ContactUs.body).contains('Error: Invalid email address')
 
     })
 
@@ -51,14 +67,14 @@ describe('Part 1', () => {
 
         cy.visit('https://webdriveruniversity.com/Contact-Us/contactus.html')
 
-        cy.get('[placeholder="First Name"]').type('Adam')
-        cy.get('[placeholder="Last Name"]').type('Szychliński')
-        cy.get('[placeholder="Email Address"]').type('adam.szychlinski@itmagination.com')
-        cy.get('[placeholder="Comments"]').type('lubię placki')
+        cy.get(ContactUs.placeholder('First Name')).type('Adam')
+        cy.get(ContactUs.placeholder('Last Name')).type('Szychliński')
+        cy.get(ContactUs.placeholder('Email Address')).type('adam.szychlinski@itmagination.com')
+        cy.get(ContactUs.placeholder('Comments')).type('lubię placki')
 
-        cy.get('[type="submit"][value="SUBMIT"]').click()
+        cy.get(ContactUs.submitButton).click()
 
-        cy.contains('#contact_reply', 'Thank You for your Message!')
+        cy.contains(ContactUs.contactReply, 'Thank You for your Message!')
 
     })
 
@@ -83,14 +99,14 @@ describe('Part 1', () => {
 
         cy.visit('https://webdriveruniversity.com/Dropdown-Checkboxes-RadioButtons/index.html')
 
-        cy.get('#checkboxes').find('input').check()
-        cy.get('#checkboxes').find('input').eq(1).click()
-        cy.get('#checkboxes').find('input').eq(3).click()
+        cy.get(DropCheckRadio.checkBoxes).find('input').check()
+        cy.get(DropCheckRadio.checkBoxes).find('input').eq(1).click()
+        cy.get(DropCheckRadio.checkBoxes).find('input').eq(3).click()
 
-        cy.get('#checkboxes').find('input').eq(0).invoke('prop', 'checked').should('equal', true)
-        cy.get('#checkboxes').find('input').eq(1).invoke('prop', 'checked').should('equal', false)
-        cy.get('#checkboxes').find('input').eq(2).invoke('prop', 'checked').should('equal', true)
-        cy.get('#checkboxes').find('input').eq(3).invoke('prop', 'checked').should('equal', false)
+        cy.get(DropCheckRadio.checkBoxes).find('input').eq(0).invoke('prop', 'checked').should('equal', true)
+        cy.get(DropCheckRadio.checkBoxes).find('input').eq(1).invoke('prop', 'checked').should('equal', false)
+        cy.get(DropCheckRadio.checkBoxes).find('input').eq(2).invoke('prop', 'checked').should('equal', true)
+        cy.get(DropCheckRadio.checkBoxes).find('input').eq(3).invoke('prop', 'checked').should('equal', false)
 
     })
 
@@ -99,7 +115,7 @@ describe('Part 1', () => {
 
         cy.visit('https://webdriveruniversity.com/Dropdown-Checkboxes-RadioButtons/index.html')
 
-        cy.get('#radio-buttons').find('input').each((radioButton) => {
+        cy.get(DropCheckRadio.radioButtons).find('input').each((radioButton) => {
             cy.wrap(radioButton).check()
             cy.wrap(radioButton).check().invoke('prop', 'checked').should('equal', true)
         })
