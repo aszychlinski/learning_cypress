@@ -74,13 +74,12 @@ describe('Part 1', () => {
 
         cy.visit('https://webdriveruniversity.com/Dropdown-Checkboxes-RadioButtons/index.html')
 
-        cy.get(dropCheckRadio.allDropDownMenus).each( (dropdown, dropDownIndex) => {
-            dropDownIndex += 1
-            cy.get(dropCheckRadio.paramDropDownMenu(dropDownIndex)).find('option').each( (option, optionIndex) => {
-                cy.get(dropCheckRadio.paramDropDownMenu(dropDownIndex)).select(optionIndex)
-                cy.wrap(option).invoke('attr', 'value').should('equal', option.text().toLowerCase())
+        for (const [dropDownId, myArray] of Object.entries(dropCheckRadio.dropDowns)) {
+            cy.get(dropCheckRadio.paramDropDownMenu(dropDownId)).find('option')
+                .should('have.lengthOf', myArray.length).each( (foundOption) => {
+                    expect(myArray).to.include(foundOption.text())
             })
-        })
+        }
 
     })
 

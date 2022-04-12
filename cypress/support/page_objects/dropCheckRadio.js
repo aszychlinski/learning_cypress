@@ -1,7 +1,12 @@
 class dropCheckRadio_ {
     checkBoxes = '#checkboxes';
     radioButtons = '#radio-buttons';
-    allDropDownMenus = '[id^=dropdowm-menu-]';
+
+    dropDowns = {
+        1: ['JAVA', 'C#', 'Python', 'SQL'],
+        2: ['Eclipse', 'Maven', 'TestNG', 'JUnit'],
+        3: ['HTML', 'CSS', 'JavaScript', 'JQuery']
+    }
 
     paramDropDownMenu(value) {
         return `[id^=dropdowm-menu-${value}]`
