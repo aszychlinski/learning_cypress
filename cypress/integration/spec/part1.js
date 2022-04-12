@@ -75,8 +75,10 @@ describe('Part 1', () => {
         cy.visit('https://webdriveruniversity.com/Dropdown-Checkboxes-RadioButtons/index.html')
 
         for (const [dropDownId, myArray] of Object.entries(dropCheckRadio.dropDowns)) {
-            cy.get(dropCheckRadio.paramDropDownMenu(dropDownId)).find('option')
-                .should('have.lengthOf', myArray.length).each( (foundOption) => {
+            const currentDropdown = cy.get(dropCheckRadio.paramDropDownMenu(dropDownId))
+
+            currentDropdown.find('option').should('have.lengthOf', myArray.length)
+                .each( (foundOption) => {
                     expect(myArray).to.include(foundOption.text())
             })
         }
