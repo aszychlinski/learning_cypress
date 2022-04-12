@@ -1,6 +1,6 @@
 class AjaxLoader {
     static greenButton = '#myDiv[style="display: block;"] p';
-    static closeModalButton = '[data-dismiss="modal"]';
+    static closeModalButton = 'div[class="modal-footer"] button[data-dismiss="modal"]';
 }
 
 class AutoComplete {
@@ -185,7 +185,7 @@ describe('Part 1', () => {
         cy.visit('https://webdriveruniversity.com/Ajax-Loader/index.html')
 
         cy.get(AjaxLoader.greenButton, {timeout: 20000}).click()
-        cy.contains(AjaxLoader.closeModalButton, 'Close').click()
+        cy.get(AjaxLoader.closeModalButton).click()
 
     })
 
