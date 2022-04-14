@@ -7,19 +7,21 @@ import {orderProcessedPage} from "./orderProcessedPage";
 
 class commonActions_ {
     searchInput = '#filter_keyword';
+    homePageURL = 'https://automationteststore.com/';
 
     addProductToCart(product_id) {
         productPage.viewProductPage(product_id)
         productPage.clickAddToCart()
     }
 
+    goToHomePage() {
+        cy.visit(this.homePageURL)
+    }
+
     performCheckout() {
         cartPage.goToCart()
         cartPage.clickCheckoutButton()
-        cy.url().then((url) => {
-            if (url === loginPage.loginUrl)
-                loginPage.performLogin()
-        })
+        loginPage.performLogin()
         confirmOrderPage.clickConfirmOrder()
         orderProcessedPage.verifySuccessHeader()
         orderProcessedPage.clickContinueButton()

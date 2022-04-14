@@ -1,16 +1,46 @@
 import {commonActions} from "../../support/page_objects/part2/commonActions";
 import {productPage} from "../../support/page_objects/part2/productPage";
+import {loginPage} from "../../support/page_objects/part2/loginPage";
+import {topNavigation} from "../../support/page_objects/part2/topNavigation";
+import {addressPage} from "../../support/page_objects/part2/addressPage";
+import {insertAddressPage} from "../../support/page_objects/part2/insertAddressPage";
 
 describe('Part 2', () => {
 
-    it.only('1', () => {
+    beforeEach(() => {
+        cy.reload()
+    })
+
+    it('1', () => {
         // Napisz test dodający koszulkę oraz buty do koszyka (bez użycia wyszukiwarki), następnie przy pomocy
         // wyszukiwarki dodaj jakiś kosmetyk i doprowadź zamówienie do finalizacji :) - sprawdź czy wszystko poszło OK
 
+        // próbuję dużego stopnia abstrakcji
         commonActions.addProductToCart(123)
         commonActions.addProductToCart(118)
         commonActions.performSearch('Obsession Night Perfume')
         productPage.clickAddToCart()
         commonActions.performCheckout()
     })
+
+    it('2', () => {
+        // Sprawdź czy dane na ekranie wprowadzania adresu są walidowane poprawnie w formularzu
+
+        // próbuję mniejszego stopnia abstrakcji (bardziej atomiczne stepy)
+        commonActions.goToHomePage()
+        loginPage.performLogin()
+        topNavigation.clickAddressBookButton()
+        addressPage.clickNewAddressButton()
+        insertAddressPage.clickContinueButton()
+        insertAddressPage.verifyAmountOfErrorsEquals(6)
+        insertAddressPage.testLowerBoundary()
+        insertAddressPage.verifyAmountOfErrorsEquals(6)
+        insertAddressPage.testUpperBoundary()
+        insertAddressPage.verifyAmountOfErrorsEquals(6)
+        insertAddressPage.testCorrectData()
+        insertAddressPage.verifyAmountOfErrorsEquals(0)
+        // test nie przechodzi do końca bo znajduje błąd - walidacja dwóch inputów jest niewłaściwa
+        addressPage.verifyYouAreHere()
+        addressPage.verifyAddressInserted()
+    });
 })
