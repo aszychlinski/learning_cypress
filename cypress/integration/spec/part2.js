@@ -4,6 +4,7 @@ import {loginPage} from "../../support/page_objects/part2/loginPage";
 import {topNavigation} from "../../support/page_objects/part2/topNavigation";
 import {addressPage} from "../../support/page_objects/part2/addressPage";
 import {insertAddressPage} from "../../support/page_objects/part2/insertAddressPage";
+import {cartPage} from "../../support/page_objects/part2/cartPage";
 const products = require("./../../support/test_data/products.json")
 
 describe('Part 2', () => {
@@ -43,5 +44,18 @@ describe('Part 2', () => {
         // test nie przechodzi do końca bo znajduje błąd - walidacja dwóch inputów jest niewłaściwa
         addressPage.verifyYouAreHere()
         addressPage.verifyAddressInserted()
+    });
+
+    it('3', () => {
+        // Sprawdź czy po dodaniu artykułu do koszyka poprawnie zmienia się ilość oraz wartość koszyka nad paskiem menu strony
+
+        cartPage.goToCart()
+        cartPage.verifyCartIsEmpty()
+        commonActions.addProductToCartById(products.shoes.WOMENS_STILETTO.id)
+        topNavigation.verifyCartStatus(1, products.shoes.WOMENS_STILETTO.price * 1)
+        commonActions.addProductToCartById(products.shoes.WOMENS_STILETTO.id)
+        topNavigation.verifyCartStatus(2, products.shoes.WOMENS_STILETTO.price * 2)
+        commonActions.addProductToCartById(products.shoes.WOMENS_STILETTO.id)
+        topNavigation.verifyCartStatus(3, products.shoes.WOMENS_STILETTO.price * 3)
     });
 })
