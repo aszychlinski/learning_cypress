@@ -4,6 +4,7 @@ import {loginPage} from "../../support/page_objects/part2/loginPage";
 import {topNavigation} from "../../support/page_objects/part2/topNavigation";
 import {addressPage} from "../../support/page_objects/part2/addressPage";
 import {insertAddressPage} from "../../support/page_objects/part2/insertAddressPage";
+const products = require("./../../support/test_data/products.json")
 
 describe('Part 2', () => {
 
@@ -16,9 +17,9 @@ describe('Part 2', () => {
         // wyszukiwarki dodaj jakiś kosmetyk i doprowadź zamówienie do finalizacji :) - sprawdź czy wszystko poszło OK
 
         // próbuję dużego stopnia abstrakcji
-        commonActions.addProductToCart(123)
-        commonActions.addProductToCart(118)
-        commonActions.performSearch('Obsession Night Perfume')
+        commonActions.addProductToCart(products.tshirts_ids.CASUAL_BASEBALL)
+        commonActions.addProductToCart(products.shoes_ids.WOMENS_STILETTO)
+        commonActions.performSearch(products.cosmetics_strings.OBSESSION)
         productPage.clickAddToCart()
         commonActions.performCheckout()
     })
