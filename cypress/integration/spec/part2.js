@@ -17,9 +17,9 @@ describe('Part 2', () => {
         // wyszukiwarki dodaj jakiś kosmetyk i doprowadź zamówienie do finalizacji :) - sprawdź czy wszystko poszło OK
 
         // próbuję dużego stopnia abstrakcji
-        commonActions.addProductToCart(products.tshirts_ids.CASUAL_BASEBALL)
-        commonActions.addProductToCart(products.shoes_ids.WOMENS_STILETTO)
-        commonActions.performSearch(products.cosmetics_strings.OBSESSION)
+        commonActions.addProductToCartById(products.tshirts.CASUAL_BASEBALL.id)
+        commonActions.addProductToCartById(products.shoes.WOMENS_STILETTO.id)
+        commonActions.performSearch(products.cosmetics.OBSESSION.name)
         productPage.clickAddToCart()
         commonActions.performCheckout()
     })
