@@ -1,11 +1,18 @@
 {
-  "tshirts_ids": {
-    "CASUAL_BASEBALL": 123
+  "tshirts": {
+    "CASUAL_BASEBALL": {
+      "id": 123
+    }
   },
-  "shoes_ids": {
-    "WOMENS_STILETTO": 118
+  "shoes": {
+    "WOMENS_STILETTO": {
+      "id": 118,
+      "price": 2600
+    }
   },
-  "cosmetics_strings": {
-    "OBSESSION": "Obsession Night Perfume"
+  "cosmetics": {
+    "OBSESSION": {
+      "name": "Obsession Night Perfume"
+    }
   }
 }
