@@ -3,6 +3,7 @@ import {autoComplete} from "../../support/page_objects/autoComplete";
 import {contactUs} from "../../support/page_objects/contactUs";
 import {datePicker} from "../../support/page_objects/datePicker";
 import {dropCheckRadio} from "../../support/page_objects/dropCheckRadio";
+const test_data = require('./../../support/test_data/contactUs.json');
 
 
 describe('Part 1', () => {
@@ -12,17 +13,17 @@ describe('Part 1', () => {
 
         cy.visit('https://webdriveruniversity.com/Contact-Us/contactus.html')
 
-        cy.get(contactUs.placeholder('First Name')).type('Adam')
-        cy.get(contactUs.placeholder('Last Name')).type('Szychliński')
-        cy.get(contactUs.placeholder('Email Address')).type('adam.szychlinski@itmagination.com')
-        cy.get(contactUs.placeholder('Comments')).type('lubię placki')
+        cy.get(contactUs.placeholder.FIRST_NAME).type(test_data.inputs.FIRST_NAME)
+        cy.get(contactUs.placeholder.LAST_NAME).type(test_data.inputs.LAST_NAME)
+        cy.get(contactUs.placeholder.EMAIL_ADDRESS).type(test_data.inputs.VALID_EMAIL_ADDRESS)
+        cy.get(contactUs.placeholder.COMMENTS).type(test_data.inputs.COMMENTS)
 
         cy.get(contactUs.resetButton).click()
 
-        cy.get(contactUs.placeholder('First Name')).should('have.value', '')
-        cy.get(contactUs.placeholder('Last Name')).should('have.value', '')
-        cy.get(contactUs.placeholder('Email Address')).should('have.value', '')
-        cy.get(contactUs.placeholder('Comments')).should('have.value', '')
+        cy.get(contactUs.placeholder.FIRST_NAME).should('have.value', '')
+        cy.get(contactUs.placeholder.LAST_NAME).should('have.value', '')
+        cy.get(contactUs.placeholder.EMAIL_ADDRESS).should('have.value', '')
+        cy.get(contactUs.placeholder.COMMENTS).should('have.value', '')
 
     })
 
@@ -31,10 +32,10 @@ describe('Part 1', () => {
 
         cy.visit('https://webdriveruniversity.com/Contact-Us/contactus.html')
 
-        cy.get(contactUs.placeholder('Email Address')).type('adam.szychlinski@itmagination.com')
+        cy.get(contactUs.placeholder.EMAIL_ADDRESS).type(test_data.inputs.VALID_EMAIL_ADDRESS)
 
         cy.get(contactUs.submitButton).click()
-        cy.get('body').contains('Error: all fields are required')
+        cy.get('body').contains(test_data.outputs.MISSING_FIELDS)
 
     })
 
@@ -43,13 +44,13 @@ describe('Part 1', () => {
 
         cy.visit('https://webdriveruniversity.com/Contact-Us/contactus.html')
 
-        cy.get(contactUs.placeholder('First Name')).type('Adam')
-        cy.get(contactUs.placeholder('Last Name')).type('Szychliński')
-        cy.get(contactUs.placeholder('Email Address')).type('adam.szychlinski')
-        cy.get(contactUs.placeholder('Comments')).type('lubię placki')
+        cy.get(contactUs.placeholder.FIRST_NAME).type(test_data.inputs.FIRST_NAME)
+        cy.get(contactUs.placeholder.LAST_NAME).type(test_data.inputs.LAST_NAME)
+        cy.get(contactUs.placeholder.EMAIL_ADDRESS).type(test_data.inputs.INVALID_EMAIL_ADDRESS)
+        cy.get(contactUs.placeholder.COMMENTS).type(test_data.inputs.COMMENTS)
 
         cy.get(contactUs.submitButton).click()
-        cy.get(contactUs.body).contains('Error: Invalid email address')
+        cy.get(contactUs.body).contains(test_data.outputs.INVALID_EMAIL)
 
     })
 
@@ -58,14 +59,14 @@ describe('Part 1', () => {
 
         cy.visit('https://webdriveruniversity.com/Contact-Us/contactus.html')
 
-        cy.get(contactUs.placeholder('First Name')).type('Adam')
-        cy.get(contactUs.placeholder('Last Name')).type('Szychliński')
-        cy.get(contactUs.placeholder('Email Address')).type('adam.szychlinski@itmagination.com')
-        cy.get(contactUs.placeholder('Comments')).type('lubię placki')
+        cy.get(contactUs.placeholder.FIRST_NAME).type(test_data.inputs.FIRST_NAME)
+        cy.get(contactUs.placeholder.LAST_NAME).type(test_data.inputs.LAST_NAME)
+        cy.get(contactUs.placeholder.EMAIL_ADDRESS).type(test_data.inputs.VALID_EMAIL_ADDRESS)
+        cy.get(contactUs.placeholder.COMMENTS).type(test_data.inputs.COMMENTS)
 
         cy.get(contactUs.submitButton).click()
 
-        cy.contains(contactUs.contactReply, 'Thank You for your Message!')
+        cy.contains(contactUs.contactReply, test_data.outputs.THANK_YOU)
 
     })
 
