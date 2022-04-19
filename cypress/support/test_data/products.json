@@ -1,0 +1,11 @@
+{
+  "tshirts_ids": {
+    "CASUAL_BASEBALL": 123
+  },
+  "shoes_ids": {
+    "WOMENS_STILETTO": 118
+  },
+  "cosmetics_strings": {
+    "OBSESSION": "Obsession Night Perfume"
+  }
+}
