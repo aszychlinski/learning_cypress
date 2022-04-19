@@ -9,7 +9,7 @@ class commonActions_ {
     searchInput = '#filter_keyword';
     homePageURL = 'https://automationteststore.com/';
 
-    addProductToCart(product_id) {
+    addProductToCartById(product_id) {
         productPage.viewProductPage(product_id)
         productPage.clickAddToCart()
     }
