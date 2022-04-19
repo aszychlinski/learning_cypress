@@ -1,0 +1,14 @@
+{
+  "inputs": {
+    "FIRST_NAME": "Adam",
+    "LAST_NAME": "Szychliński",
+    "VALID_EMAIL_ADDRESS": "adam.szychlinski@itmagination.com",
+    "INVALID_EMAIL_ADDRESS": "adam.szychlinski",
+    "COMMENTS": "Comments"
+  },
+  "outputs": {
+    "MISSING_FIELDS": "Error: all fields are required",
+    "INVALID_EMAIL": "Error: Invalid email address",
+    "THANK_YOU": "Thank You for your Message!"
+  }
+}
