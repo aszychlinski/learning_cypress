@@ -1,0 +1,84 @@
+const addPet = require('/cypress/support/test_data/petstore/addPetRequest.json')
+const deletePet = require('/cypress/support/test_data/petstore/deletePetResponse.json')
+const updatePet = require('/cypress/support/test_data/petstore/updatePetRequest.json')
+const updateFormData = require('/cypress/support/test_data/petstore/updateFormData.json')
+const updateFormResponse = require('/cypress/support/test_data/petstore/updateFormResponse.json')
+const updateFinalFormResponse = require('/cypress/support/test_data/petstore/updateFormFinalResponse.json')
+
+describe('Pet API tests', () => {
+
+    const baseEndPoint = 'https://petstore.swagger.io/v2';
+
+    it('Add a new pet to the store', () => {
+        const endPoint = baseEndPoint + '/pet'
+        cy.request('POST', endPoint, addPet).then(response => {
+            expect(response.status).to.equal(200)
+            expect(response.statusText).to.equal('OK')
+            expect(response.body).to.deep.equal(addPet)
+        })
+    })
+
+    it('Update an existing pet', () => {
+        const endPoint = baseEndPoint + '/pet'
+        cy.request('POST', endPoint, addPet).then(postResponse => {
+            expect(postResponse.body.category.name).to.equal(addPet.category.name)
+            expect(postResponse.body.tags[0].name).to.equal(addPet.tags[0].name)
+            cy.request('PUT', endPoint, updatePet).then( putResponse => {
+                expect(putResponse.body.category.name).to.equal(updatePet.category.name)
+                expect(putResponse.body.tags[0].name).to.equal(updatePet.tags[0].name)
+            })
+        })
+    })
+
+    it('Updates a pet in the storm with form data', () => {
+        const endPoint = baseEndPoint + '/pet'
+        cy.request('POST', endPoint, addPet).then(postResponse => {
+            expect(postResponse.body.name).to.equal(addPet.name)
+            expect(postResponse.body.status).to.equal(addPet.status)
+            cy.request(
+                {
+                method: 'POST',
+                url: endPoint + `/${postResponse.body.id}`,
+                form: true,
+                body: updateFormData
+                })
+                .its('body').should('deep.equal', updateFormResponse)
+                cy.request(`${endPoint}/${postResponse.body.id}`)
+                    .its('body')
+                    .should('deep.equal', updateFinalFormResponse)
+        })
+    })
+
+    it('Finds Pets by status', () => {
+        let endPoint = baseEndPoint + '/pet/findByStatus'
+        const statuses = ['available', 'pending', 'sold']
+        statuses.forEach ( status => {
+            let finalEndPoint = endPoint + `?status=${status}`
+            cy.request(finalEndPoint).its('body').then(body => {
+                body.forEach ( animal => {
+                    expect(animal.status).to.equal(status)
+                })
+            })
+        })
+    })
+
+    it('Find pet by ID', () => {
+        let endPoint = baseEndPoint + '/pet'
+        cy.request('POST', endPoint, addPet).its('body').then( body => {
+            endPoint+= `/${body.id}`
+            cy.request(endPoint).then( findByIDResponse => {
+                expect(findByIDResponse.body).to.deep.equal(addPet)
+            })
+        })
+    })
+
+    it('Deletes a pet', () => {
+        const endPoint = baseEndPoint + '/pet'
+        cy.request('POST', endPoint, addPet).then( postResponse => {
+            cy.request('DELETE', endPoint + '/' + postResponse.body.id).then( deleteResponse => {
+                expect(deleteResponse.status).to.equal(200)
+                expect(deleteResponse.body).to.deep.equal(deletePet)
+            })
+        })
+    })
+})
