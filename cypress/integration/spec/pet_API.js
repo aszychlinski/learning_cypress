@@ -3,7 +3,7 @@ const deletePet = require('/cypress/support/test_data/petstore/deletePetResponse
 const updatePet = require('/cypress/support/test_data/petstore/updatePetRequest.json')
 const updateFormData = require('/cypress/support/test_data/petstore/updateFormData.json')
 const updateFormResponse = require('/cypress/support/test_data/petstore/updateFormResponse.json')
-const updateFinalFormResponse = require('/cypress/support/test_data/petstore/updateFormFinalResponse.json')
+const petAfterFormUpdate = require('/cypress/support/test_data/petstore/petAfterFormUpdate.json')
 
 describe('Pet API tests', () => {
 
@@ -30,22 +30,23 @@ describe('Pet API tests', () => {
         })
     })
 
-    it('Updates a pet in the storm with form data', () => {
-        const endPoint = baseEndPoint + '/pet'
+    it('Updates a pet in the store with form data', () => {
+        let endPoint = baseEndPoint + '/pet'
         cy.request('POST', endPoint, addPet).then(postResponse => {
             expect(postResponse.body.name).to.equal(addPet.name)
             expect(postResponse.body.status).to.equal(addPet.status)
+            endPoint += `/${postResponse.body.id}`
             cy.request(
                 {
                 method: 'POST',
-                url: endPoint + `/${postResponse.body.id}`,
+                url: endPoint,
                 form: true,
                 body: updateFormData
                 })
                 .its('body').should('deep.equal', updateFormResponse)
-                cy.request(`${endPoint}/${postResponse.body.id}`)
+                cy.request(endPoint)
                     .its('body')
-                    .should('deep.equal', updateFinalFormResponse)
+                    .should('deep.equal', petAfterFormUpdate)
         })
     })
 
