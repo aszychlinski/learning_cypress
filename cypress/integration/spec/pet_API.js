@@ -7,11 +7,10 @@ const petAfterFormUpdate = require('/cypress/support/test_data/petstore/petAfter
 
 describe('Pet API tests', () => {
 
-    const baseEndPoint = 'https://petstore.swagger.io/v2';
+    const baseEndPoint = 'https://petstore.swagger.io/v2/pet';
 
     it('Add a new pet to the store', () => {
-        const endPoint = baseEndPoint + '/pet'
-        cy.request('POST', endPoint, addPet).then(response => {
+        cy.request('POST', baseEndPoint, addPet).then(response => {
             expect(response.status).to.equal(200)
             expect(response.statusText).to.equal('OK')
             expect(response.body).to.deep.equal(addPet)
@@ -19,11 +18,10 @@ describe('Pet API tests', () => {
     })
 
     it('Update an existing pet', () => {
-        const endPoint = baseEndPoint + '/pet'
-        cy.request('POST', endPoint, addPet).then(postResponse => {
+        cy.request('POST', baseEndPoint, addPet).then(postResponse => {
             expect(postResponse.body.category.name).to.equal(addPet.category.name)
             expect(postResponse.body.tags[0].name).to.equal(addPet.tags[0].name)
-            cy.request('PUT', endPoint, updatePet).then( putResponse => {
+            cy.request('PUT', baseEndPoint, updatePet).then( putResponse => {
                 expect(putResponse.body.category.name).to.equal(updatePet.category.name)
                 expect(putResponse.body.tags[0].name).to.equal(updatePet.tags[0].name)
             })
@@ -31,11 +29,10 @@ describe('Pet API tests', () => {
     })
 
     it('Updates a pet in the store with form data', () => {
-        let endPoint = baseEndPoint + '/pet'
-        cy.request('POST', endPoint, addPet).then(postResponse => {
+        cy.request('POST', baseEndPoint, addPet).then(postResponse => {
             expect(postResponse.body.name).to.equal(addPet.name)
             expect(postResponse.body.status).to.equal(addPet.status)
-            endPoint += `/${postResponse.body.id}`
+            let endPoint = baseEndPoint + `/${postResponse.body.id}`
             cy.request(
                 {
                 method: 'POST',
@@ -51,10 +48,10 @@ describe('Pet API tests', () => {
     })
 
     it('Finds Pets by status', () => {
-        let endPoint = baseEndPoint + '/pet/findByStatus'
+        const endPoint = baseEndPoint + '/findByStatus'
         const statuses = ['available', 'pending', 'sold']
         statuses.forEach ( status => {
-            let finalEndPoint = endPoint + `?status=${status}`
+            const finalEndPoint = endPoint + `?status=${status}`
             cy.request(finalEndPoint).its('body').then(body => {
                 body.forEach ( animal => {
                     expect(animal.status).to.equal(status)
@@ -64,9 +61,8 @@ describe('Pet API tests', () => {
     })
 
     it('Find pet by ID', () => {
-        let endPoint = baseEndPoint + '/pet'
-        cy.request('POST', endPoint, addPet).its('body').then( body => {
-            endPoint+= `/${body.id}`
+        cy.request('POST', baseEndPoint, addPet).its('body').then( body => {
+            const endPoint = baseEndPoint + `/${body.id}`
             cy.request(endPoint).then( findByIDResponse => {
                 expect(findByIDResponse.body).to.deep.equal(addPet)
             })
@@ -74,9 +70,8 @@ describe('Pet API tests', () => {
     })
 
     it('Deletes a pet', () => {
-        const endPoint = baseEndPoint + '/pet'
-        cy.request('POST', endPoint, addPet).then( postResponse => {
-            cy.request('DELETE', endPoint + '/' + postResponse.body.id).then( deleteResponse => {
+        cy.request('POST', baseEndPoint, addPet).then( postResponse => {
+            cy.request('DELETE', baseEndPoint + '/' + postResponse.body.id).then( deleteResponse => {
                 expect(deleteResponse.status).to.equal(200)
                 expect(deleteResponse.body).to.deep.equal(deletePet)
             })
