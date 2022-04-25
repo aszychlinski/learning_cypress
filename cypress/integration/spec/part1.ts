@@ -76,8 +76,9 @@ describe('Part 1', () => {
 
         cy.visit('https://webdriveruniversity.com/Dropdown-Checkboxes-RadioButtons/index.html')
 
-        for (const [dropDownId, myArray] of dropCheckRadio.dropDowns) {
+        for (const dropDownId of Object.keys(dropCheckRadio.dropDowns)) {
             const currentDropdown: ObjectLike = cy.get(dropCheckRadio.paramDropDownMenu(dropDownId))
+            const myArray: string[] = dropCheckRadio.dropDowns[dropDownId]
 
             currentDropdown.find('option').should('have.lengthOf', myArray.length)
                 .each( (foundOption) => {

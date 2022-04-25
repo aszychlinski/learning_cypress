@@ -62,11 +62,11 @@ describe('Store API tests', () => {
         cy.request(endPoint).then( response => {
             expect(response.status).to.equal(200)
             expect(response.statusText).to.equal('OK')
-            // not enough information has been provided to robustly test this particular method
-            // I have assumed that these keys are always present and only the value changes
-            for (const key in response.body) {
-                expect(Object.keys(inventory).join('|')).to.include(key)
-            }
+            // it turns out the response to this call is dependent on what other users do
+            // this is unpredictable and untestable (properly)
+            expect(Object.keys(response.body)).to.include('sold')
+            expect(Object.keys(response.body)).to.include('available')
+            expect(Object.keys(response.body)).to.include('pending')
         })
     })
 })
