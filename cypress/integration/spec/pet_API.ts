@@ -1,9 +1,9 @@
-const addPet = require('/cypress/support/test_data/petstore/addPetRequest.json')
-const deletePet = require('/cypress/support/test_data/petstore/deletePetResponse.json')
-const updatePet = require('/cypress/support/test_data/petstore/updatePetRequest.json')
-const updateFormData = require('/cypress/support/test_data/petstore/updateFormData.json')
-const updateFormResponse = require('/cypress/support/test_data/petstore/updateFormResponse.json')
-const petAfterFormUpdate = require('/cypress/support/test_data/petstore/petAfterFormUpdate.json')
+import addPet from '../../support/test_data/petstore/addPetRequest.json';
+import deletePet from '../../support/test_data/petstore/deletePetResponse.json';
+import updatePet from '../../support/test_data/petstore/updatePetRequest.json';
+import updateFormData from '../../support/test_data/petstore/updateFormData.json';
+import updateFormResponse from '../../support/test_data/petstore/updateFormResponse.json';
+import petAfterFormUpdate from '../../support/test_data/petstore/petAfterFormUpdate.json';
 
 describe('Pet API tests', () => {
 
@@ -32,7 +32,7 @@ describe('Pet API tests', () => {
         cy.request('POST', baseEndPoint, addPet).then(postResponse => {
             expect(postResponse.body.name).to.equal(addPet.name)
             expect(postResponse.body.status).to.equal(addPet.status)
-            let endPoint = baseEndPoint + `/${postResponse.body.id}`
+            let endPoint: string = baseEndPoint + `/${postResponse.body.id}`
             cy.request(
                 {
                 method: 'POST',
@@ -48,10 +48,10 @@ describe('Pet API tests', () => {
     })
 
     it('Finds Pets by status', () => {
-        const endPoint = baseEndPoint + '/findByStatus'
-        const statuses = ['available', 'pending', 'sold']
+        const endPoint: string = baseEndPoint + '/findByStatus'
+        const statuses: string[] = ['available', 'pending', 'sold']
         statuses.forEach ( status => {
-            const finalEndPoint = endPoint + `?status=${status}`
+            const finalEndPoint: string = endPoint + `?status=${status}`
             cy.request(finalEndPoint).its('body').then(body => {
                 body.forEach ( animal => {
                     expect(animal.status).to.equal(status)
@@ -62,7 +62,7 @@ describe('Pet API tests', () => {
 
     it('Find pet by ID', () => {
         cy.request('POST', baseEndPoint, addPet).its('body').then( body => {
-            const endPoint = baseEndPoint + `/${body.id}`
+            const endPoint: string = baseEndPoint + `/${body.id}`
             cy.request(endPoint).then( findByIDResponse => {
                 expect(findByIDResponse.body).to.deep.equal(addPet)
             })

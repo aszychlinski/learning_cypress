@@ -3,7 +3,8 @@ import {autoComplete} from "../../support/page_objects/autoComplete";
 import {contactUs} from "../../support/page_objects/contactUs";
 import {datePicker} from "../../support/page_objects/datePicker";
 import {dropCheckRadio} from "../../support/page_objects/dropCheckRadio";
-const test_data = require('./../../support/test_data/contactUs.json');
+import test_data from './../../support/test_data/contactUs.json';
+import ObjectLike = Cypress.ObjectLike;
 
 
 describe('Part 1', () => {
@@ -75,8 +76,8 @@ describe('Part 1', () => {
 
         cy.visit('https://webdriveruniversity.com/Dropdown-Checkboxes-RadioButtons/index.html')
 
-        for (const [dropDownId, myArray] of Object.entries(dropCheckRadio.dropDowns)) {
-            const currentDropdown = cy.get(dropCheckRadio.paramDropDownMenu(dropDownId))
+        for (const [dropDownId, myArray] of dropCheckRadio.dropDowns) {
+            const currentDropdown: ObjectLike = cy.get(dropCheckRadio.paramDropDownMenu(dropDownId))
 
             currentDropdown.find('option').should('have.lengthOf', myArray.length)
                 .each( (foundOption) => {
@@ -120,9 +121,9 @@ describe('Part 1', () => {
 
         cy.visit('https://webdriveruniversity.com/Datepicker/index.html')
 
-        const date = new Date()
-        const today = date.getDate()
-        const tomorrow = today + 1
+        const date: Date = new Date()
+        const today: number = date.getDate()
+        const tomorrow: number = today + 1
 
         cy.get(datePicker.input).click()
         cy.get(datePicker.todayDay).should('have.text', today.toString())

@@ -1,19 +1,19 @@
-const deletedPetOrder = require('/cypress/support/test_data/petstore/deletedPetOrder.json');
-const orderNotFound = require('/cypress/support/test_data/petstore/orderNotFound.json')
-const petOrder = require('/cypress/support/test_data/petstore/petOrder.json')
-const inventory = require('/cypress/support/test_data/petstore/inventory.json')
+import deletedPetOrder from '../../support/test_data/petstore/deletedPetOrder.json';
+import orderNotFound from '../../support/test_data/petstore/orderNotFound.json';
+import petOrder from '../../support/test_data/petstore/petOrder.json';
+import inventory from '../../support/test_data/petstore/inventory.json';
 
-function normalize_shipDate(shipDatePath) {
+function normalize_shipDate(shipDatePath): string {
     expect(shipDatePath).to.match(new RegExp('.*\\+0000$'))
     return shipDatePath.replace('+0000', 'Z')
 }
 
 describe('Store API tests', () => {
 
-    const baseEndPoint = 'https://petstore.swagger.io/v2/store';
+    const baseEndPoint: string = 'https://petstore.swagger.io/v2/store';
 
     it('Place an order for a pet', () => {
-        const endPoint = baseEndPoint + '/order'
+        const endPoint: string = baseEndPoint + '/order'
         // create order
         cy.request('POST', endPoint, petOrder).then(response => {
             expect(response.status).to.equal(200)
@@ -24,7 +24,7 @@ describe('Store API tests', () => {
     })
 
     it('Find purchase order by ID', () => {
-        let endPoint = baseEndPoint + '/order'
+        let endPoint: string = baseEndPoint + '/order'
         // create order
         cy.request('POST', endPoint, petOrder).then(_ => {
             endPoint += `/${petOrder.id}`
@@ -37,7 +37,7 @@ describe('Store API tests', () => {
     })
 
     it('Delete purchase order by ID', () => {
-        let endPoint = baseEndPoint + '/order'
+        let endPoint: string = baseEndPoint + '/order'
         // create order
         cy.request('POST', endPoint, petOrder).then(_ => {
             endPoint += `/${petOrder.id}`
@@ -57,7 +57,7 @@ describe('Store API tests', () => {
     })
 
     it('Returns pet inventories by status', () => {
-        let endPoint = baseEndPoint + '/inventory'
+        let endPoint: string = baseEndPoint + '/inventory'
         // get inventory
         cy.request(endPoint).then( response => {
             expect(response.status).to.equal(200)

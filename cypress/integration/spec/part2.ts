@@ -5,7 +5,7 @@ import {topNavigation} from "../../support/page_objects/part2/topNavigation";
 import {addressPage} from "../../support/page_objects/part2/addressPage";
 import {insertAddressPage} from "../../support/page_objects/part2/insertAddressPage";
 import {cartPage} from "../../support/page_objects/part2/cartPage";
-const products = require("./../../support/test_data/products.json")
+import products from "./../../support/test_data/products.json";
 
 describe('Part 2', () => {
 
