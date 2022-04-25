@@ -1,12 +1,14 @@
-const userCreateWith = require('/cypress/support/test_data/petstore/userCreateWith.json')
-const userUpdate = require('/cypress/support/test_data/petstore/userUpdate.json')
+// cy.fixture('/cypress/support/test_data/petstore/userCreateWith.json').as('userCreateWith')
+// cy.fixture('/cypress/support/test_data/petstore/userUpdate.json').as('userUpdate')
+import userCreateWith from '../../support/test_data/petstore/userCreateWith.json'
+import userUpdate from '../../support/test_data/petstore/userUpdate.json'
 
-function verify_response_ok(response, status = 200, statusText = 'OK') {
+function verify_response_ok(response, status: number = 200, statusText: string = 'OK'): void {
     expect(response.status).to.equal(status)
     expect(response.statusText).to.equal(statusText)
 }
 
-function verify_response_body(response, code = 200, type = 'unknown', message = 'ok') {
+function verify_response_body(response, code: number = 200, type: string = 'unknown', message: string = 'ok'): void {
     expect(response.body.code).to.equal(code)
     expect(response.body.type).to.equal(type);
     expect(response.body.message).to.equal(message)
@@ -14,10 +16,10 @@ function verify_response_body(response, code = 200, type = 'unknown', message = 
 
 describe('User API tests', () => {
 
-    const baseEndPoint = 'https://petstore.swagger.io/v2/user';
+    const baseEndPoint: string = 'https://petstore.swagger.io/v2/user';
 
     it('Create with array', () => {
-        const endPoint = baseEndPoint + '/createWithArray'
+        const endPoint: string = baseEndPoint + '/createWithArray'
         // create users
         cy.request('POST', endPoint, userCreateWith).then(response => {
             verify_response_ok(response)
@@ -27,7 +29,7 @@ describe('User API tests', () => {
 
     it('Create with list', () => {
         // functionality of this endpoint is the same as above but a separate test case is made to maintain atomicity
-        const endPoint = baseEndPoint + '/createWithList'
+        const endPoint: string = baseEndPoint + '/createWithList'
         // create multiple users
         cy.request('POST', endPoint, userCreateWith).then(response => {
             verify_response_ok(response)
@@ -36,8 +38,8 @@ describe('User API tests', () => {
     })
 
     it('Get user by user name', () => {
-        const userName = userCreateWith[0].username
-        let endPoint = baseEndPoint + '/createWithList'
+        const userName: string = userCreateWith[0].username
+        let endPoint: string = baseEndPoint + '/createWithList'
         // create multiple users
         cy.request('POST', endPoint, userCreateWith).then(_ => {
             endPoint = baseEndPoint + `/${userName}`
@@ -50,8 +52,8 @@ describe('User API tests', () => {
     })
 
     it('Updates user', () => {
-        const userName = userCreateWith[1].username
-        let endPoint = baseEndPoint + '/createWithList'
+        const userName: string = userCreateWith[1].username
+        let endPoint: string = baseEndPoint + '/createWithList'
         // create multiple users
         cy.request('POST', endPoint, userCreateWith).then(_ => {
             endPoint = baseEndPoint + `/${userName}`
@@ -70,8 +72,8 @@ describe('User API tests', () => {
     })
 
     it('Delete user', () => {
-        const userName = userCreateWith[0].username
-        let endPoint = baseEndPoint + '/createWithList'
+        const userName: string = userCreateWith[0].username
+        let endPoint: string = baseEndPoint + '/createWithList'
         // create multiple users
         cy.request('POST', endPoint, userCreateWith).then(_ => {
             endPoint = baseEndPoint + `/${userName}`
@@ -94,7 +96,7 @@ describe('User API tests', () => {
     })
 
     it('Login user into the system', () => {
-        let endPoint = baseEndPoint + '/login'
+        let endPoint: string = baseEndPoint + '/login'
         // login
         cy.request(
             {
@@ -113,7 +115,7 @@ describe('User API tests', () => {
     })
 
     it('Logs out current logged in user session', () => {
-        const endPoint = baseEndPoint + '/logout'
+        const endPoint: string = baseEndPoint + '/logout'
         // logout
         cy.request(endPoint).then(response => {
             verify_response_ok(response)
@@ -121,8 +123,8 @@ describe('User API tests', () => {
     })
 
     it('Create user', () => {
-        const userName = userCreateWith[1].username
-        let endPoint = baseEndPoint + `/${userName}`
+        const userName: string = userCreateWith[1].username
+        let endPoint: string = baseEndPoint + `/${userName}`
         // delete user in case it is left over from other tests
         cy.request({
             method: 'DELETE',
