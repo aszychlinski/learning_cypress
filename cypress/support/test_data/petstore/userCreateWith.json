@@ -1,0 +1,22 @@
+[
+  {
+    "id": 90,
+    "username": "jkowalski",
+    "firstName": "Jan",
+    "lastName": "Kowalski",
+    "email": "jkowalski@swagger.com",
+    "password": "admin1",
+    "phone": "unknown",
+    "userStatus": 1
+  },
+  {
+    "id": 91,
+    "username": "jsmith",
+    "firstName": "John",
+    "lastName": "Smith",
+    "email": "jsmith@swagger.com",
+    "password": "admin2",
+    "phone": "unknown",
+    "userStatus": 3
+  }
+]
